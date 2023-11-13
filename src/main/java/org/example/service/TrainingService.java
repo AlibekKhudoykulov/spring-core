@@ -1,22 +1,36 @@
 package org.example.service;
 
 import org.example.model.Training;
+import org.example.model.TrainingType;
 import org.example.repository.TrainingDAO;
+import org.example.repository.TrainingTypeDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class TrainingService {
-    private final TrainingDAO trainingDAO = new TrainingDAO();
+
+    @Autowired
+    private TrainingDAO trainingDAO;
+
+    @Autowired
+    private TrainingTypeDAO trainingTypeDAO;
 
     public void createTraining(Training training) {
-        trainingDAO.insertTraining(training);
+        trainingDAO.createTraining(training);
     }
 
-    public Training getTrainingById(int id) {
-        return trainingDAO.selectTrainingById(id);
+    public Training getTraining(int trainingId) {
+        return trainingDAO.getTraining(trainingId);
     }
 
-    public List<Training> getAllTrainings() {
-        return trainingDAO.selectAllTrainings();
+    public void createTrainingType(TrainingType trainingType) {
+        trainingTypeDAO.createTrainingType(trainingType);
+    }
+
+    public TrainingType getTrainingType(int trainingTypeId) {
+        return trainingTypeDAO.getTrainingType(trainingTypeId);
     }
 }

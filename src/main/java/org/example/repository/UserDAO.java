@@ -2,6 +2,8 @@ package org.example.repository;
 
 import org.example.dbconnection.DatabaseConnection;
 import org.example.model.User;
+import org.example.storage.InMemoryStorage;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,55 +12,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class UserDAO {
-    private static final String SELECT_ALL_USERS = "SELECT * FROM users";
-    private static final String SELECT_USER_BY_ID = "SELECT * FROM users WHERE id = ?";
+    private InMemoryStorage storage;
 
-    public List<User> getAllUsers() {
-        List<User> users = new ArrayList<>();
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS)) {
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                User user = new User();
-                user.setId(resultSet.getInt("id"));
-                user.setFirstName(resultSet.getString("first_name"));
-                user.setLastName(resultSet.getString("last_name"));
-                user.setUsername(resultSet.getString("username"));
-                user.setPassword(resultSet.getString("password"));
-                user.setActive(resultSet.getBoolean("is_active"));
-
-                users.add(user);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return users;
+    public UserDAO(InMemoryStorage storage) {
+        this.storage = storage;
     }
 
-    public User getUserById(int id) {
-        User user = null;
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID)) {
+    public void createUser(User user) {
+        storage.addToStorage("users", user.getId(), user);
+    }
 
-            preparedStatement.setInt(1, id);
+    public void updateUser(User user) {
+        storage.updateStorage("users", user.getId(), user);
+    }
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                user = new User();
-                user.setId(resultSet.getInt("id"));
-                user.setFirstName(resultSet.getString("first_name"));
-                user.setLastName(resultSet.getString("last_name"));
-                user.setUsername(resultSet.getString("username"));
-                user.setPassword(resultSet.getString("password"));
-                user.setActive(resultSet.getBoolean("is_active"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return user;
+    public User getUser(int userId) {
+        return (User) storage.getFromStorage("users", userId);
     }
 }
