@@ -24,4 +24,5 @@
     <bean id="trainingDAO" class="org.example.repository.TrainingDAO"/>
     <bean id="trainingTypeDAO" class="org.example.repository.TrainingTypeDAO"/>
     <bean id="userDAO" class="org.example.repository.UserDAO"/>
+    <bean id="inMemoryStorage" class="org.example.storage.InMemoryStorage"/>
 </beans>

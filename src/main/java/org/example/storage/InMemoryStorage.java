@@ -1,15 +1,14 @@
 package org.example.storage;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
 public class InMemoryStorage {
-    private Map<String, Map<Integer, Object>> storage = new HashMap<>();
-    public InMemoryStorage(Map<String, Map<Integer, Object>> storage) {
-        this.storage = storage;
-    }
+    private Map<String, Map<Integer, Object>> storage;
+
     public void addToStorage(String entityType, int entityId, Object entity) {
         if (!storage.containsKey(entityType)) {
             storage.put(entityType, new HashMap<>());
