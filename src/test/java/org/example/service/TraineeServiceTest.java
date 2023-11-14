@@ -1,7 +1,10 @@
 package org.example.service;
 
 import org.example.model.Trainee;
+import org.example.model.User;
 import org.example.repository.TraineeDAO;
+import org.example.util.PasswordGenerator;
+import org.example.util.UsernameGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,6 +22,12 @@ public class TraineeServiceTest {
     @Mock
     private TraineeDAO traineeDAO;
 
+    @Mock
+    private UsernameGenerator usernameGenerator;
+
+    @Mock
+    private PasswordGenerator passwordGenerator;
+
     @InjectMocks
     private TraineeService traineeService;
 
@@ -28,12 +37,22 @@ public class TraineeServiceTest {
     public void setUp() {
         trainee = new Trainee();
         trainee.setId(1);
+        User user = new User();
+        user.setFirstName("John");
+        user.setLastName("Doe");
+        trainee.setUser(user);
     }
 
     @Test
     @DisplayName("Test createTrainee when Trainee then createTrainee called")
     public void testCreateTraineeWhenTraineeThenCreateTraineeCalled() {
+        when(usernameGenerator.generateUsername(any(User.class))).thenReturn("johndoe");
+        when(passwordGenerator.generateRandomPassword()).thenReturn("password123");
+
         traineeService.createTrainee(trainee);
+
+        verify(usernameGenerator, times(1)).generateUsername(any(User.class));
+        verify(passwordGenerator, times(1)).generateRandomPassword();
         verify(traineeDAO, times(1)).createTrainee(trainee);
     }
 

@@ -1,79 +1,109 @@
 package org.example.service;
 
+import org.example.dto.TrainingDto;
+import org.example.model.Trainee;
+import org.example.model.Trainer;
 import org.example.model.Training;
 import org.example.model.TrainingType;
+import org.example.repository.TraineeDAO;
+import org.example.repository.TrainerDAO;
 import org.example.repository.TrainingDAO;
 import org.example.repository.TrainingTypeDAO;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
+import java.util.Date;
+
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
 public class TrainingServiceTest {
+
+    @InjectMocks
+    private TrainingService trainingService;
 
     @Mock
     private TrainingDAO trainingDAO;
 
     @Mock
+    private TrainerDAO trainerDAO;
+
+    @Mock
+    private TraineeDAO traineeDAO;
+
+    @Mock
     private TrainingTypeDAO trainingTypeDAO;
 
-    @InjectMocks
-    private TrainingService trainingService;
-
-    @Test
-    public void testCreateTrainingWhenTrainingIsCreatedThenSuccess() {
-        // Arrange
-        Training training = new Training();
-
-        // Act
-        trainingService.createTraining(training);
-
-        // Assert
-        verify(trainingDAO, times(1)).createTraining(training);
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void testGetTrainingWhenTrainingExistsThenReturnTraining() {
-        // Arrange
-        Training training = new Training();
-        when(trainingDAO.getTraining(anyInt())).thenReturn(training);
+    public void testCreateTraining() {
+        // Given
+        TrainingDto trainingDto = new TrainingDto();
+        trainingDto.setTrainerId(1);
+        trainingDto.setTraineeId(2);
+        trainingDto.setTrainingTypeId(3);
+        trainingDto.setTrainingName("Test Training");
+        trainingDto.setTrainingDate(new Date());
+        trainingDto.setTrainingDuration(2.5f);
 
-        // Act
-        Training result = trainingService.getTraining(1);
+        Trainer trainer = new Trainer();
+        when(trainerDAO.getTrainer(1)).thenReturn(trainer);
 
-        // Assert
-        verify(trainingDAO, times(1)).getTraining(1);
-        assertSame(training, result);
-    }
+        Trainee trainee = new Trainee();
+        when(traineeDAO.getTrainee(2)).thenReturn(trainee);
 
-    @Test
-    public void testCreateTrainingTypeWhenTrainingTypeIsCreatedThenSuccess() {
-        // Arrange
         TrainingType trainingType = new TrainingType();
+        when(trainingTypeDAO.getTrainingType(3)).thenReturn(trainingType);
 
-        // Act
-        trainingService.createTrainingType(trainingType);
+        // When
+        trainingService.createTraining(trainingDto);
 
-        // Assert
-        verify(trainingTypeDAO, times(1)).createTrainingType(trainingType);
+        // Then
+        verify(trainingDAO, times(1)).createTraining(any(Training.class));
+    }
+    @Test
+    public void testGetTraining() {
+        // Given
+        int trainingId = 1;
+        Training expectedTraining = new Training();
+        expectedTraining.setId(trainingId);
+        expectedTraining.setTrainingName("Test Training");
+
+        when(trainingDAO.getTraining(trainingId)).thenReturn(expectedTraining);
+
+        // When
+        Training actualTraining = trainingService.getTraining(trainingId);
+
+        // Then
+        verify(trainingDAO, times(1)).getTraining(trainingId);
+
+        // Additional assertions
+        assertNotNull(actualTraining);
+        assertEquals(expectedTraining.getId(), actualTraining.getId());
+        assertEquals(expectedTraining.getTrainingName(), actualTraining.getTrainingName());
     }
 
     @Test
-    public void testGetTrainingTypeWhenTrainingTypeExistsThenReturnTrainingType() {
-        // Arrange
-        TrainingType trainingType = new TrainingType();
-        when(trainingTypeDAO.getTrainingType(anyInt())).thenReturn(trainingType);
+    public void testGetTrainingNotFound() {
+        // Given
+        int trainingId = 1;
 
-        // Act
-        TrainingType result = trainingService.getTrainingType(1);
+        when(trainingDAO.getTraining(trainingId)).thenReturn(null);
 
-        // Assert
-        verify(trainingTypeDAO, times(1)).getTrainingType(1);
-        assertSame(trainingType, result);
+        // When
+        Training actualTraining = trainingService.getTraining(trainingId);
+
+        // Then
+        verify(trainingDAO, times(1)).getTraining(trainingId);
+
+        // Additional assertions
+        assertNull(actualTraining);
     }
 }
