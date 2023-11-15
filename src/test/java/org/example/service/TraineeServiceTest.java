@@ -59,7 +59,11 @@ public class TraineeServiceTest {
     @Test
     @DisplayName("Test updateTrainee when Trainee then updateTrainee called")
     public void testUpdateTraineeWhenTraineeThenUpdateTraineeCalled() {
+        when(traineeDAO.getTrainee(trainee.getId())).thenReturn(trainee);
+
         traineeService.updateTrainee(trainee);
+
+        verify(traineeDAO, times(1)).getTrainee(trainee.getId());
         verify(traineeDAO, times(1)).updateTrainee(trainee);
     }
 
@@ -67,6 +71,7 @@ public class TraineeServiceTest {
     @DisplayName("Test deleteTrainee when TraineeId then deleteTrainee called")
     public void testDeleteTraineeWhenTraineeIdThenDeleteTraineeCalled() {
         traineeService.deleteTrainee(trainee.getId());
+
         verify(traineeDAO, times(1)).deleteTrainee(trainee.getId());
     }
 
@@ -74,7 +79,10 @@ public class TraineeServiceTest {
     @DisplayName("Test getTrainee when TraineeId then Trainee returned")
     public void testGetTraineeWhenTraineeIdThenTraineeReturned() {
         when(traineeDAO.getTrainee(trainee.getId())).thenReturn(trainee);
+
         Trainee returnedTrainee = traineeService.getTrainee(trainee.getId());
+
         assertSame(trainee, returnedTrainee);
+        verify(traineeDAO, times(1)).getTrainee(trainee.getId());
     }
 }

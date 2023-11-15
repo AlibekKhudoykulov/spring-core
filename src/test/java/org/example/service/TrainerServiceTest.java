@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.model.Trainer;
+import org.example.model.TrainingType;
 import org.example.model.User;
 import org.example.repository.TrainerDAO;
 import org.example.util.PasswordGenerator;
@@ -32,19 +33,23 @@ public class TrainerServiceTest {
 
     private Trainer trainer;
     private User user;
+    private TrainingType trainingType;
 
     @BeforeEach
     public void setUp() {
         user = new User();
+        trainingType = new TrainingType();
         user.setFirstName("John");
         user.setLastName("Doe");
         user.setUsername("johndoe");
         user.setPassword("password");
         user.setActive(true);
+        trainingType.setName("Fitness");
 
         trainer = new Trainer();
         trainer.setId(1);
         trainer.setUser(user);
+        trainer.setTrainingType(trainingType);
     }
 
     @Test
@@ -64,6 +69,9 @@ public class TrainerServiceTest {
 
     @Test
     public void testUpdateTrainerWhenTrainerPassedThenTrainerUpdated() {
+        // Arrange
+        when(trainerDAO.getTrainer(trainer.getId())).thenReturn(trainer);
+
         // Act
         trainerService.updateTrainer(trainer);
 
