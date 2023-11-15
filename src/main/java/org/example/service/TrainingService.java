@@ -37,6 +37,7 @@ public class TrainingService {
         Trainee trainee = traineeDAO.getTrainee(trainingDto.getTraineeId());
         TrainingType trainingType = trainingTypeDAO.getTrainingType(trainingDto.getTrainingTypeId());
 
+        training.setId(trainingDto.getId());
         training.setTrainer(trainer);
         training.setTrainee(trainee);
         training.setTrainingType(trainingType);

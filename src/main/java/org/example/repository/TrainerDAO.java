@@ -7,13 +7,16 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class TrainerDAO {
-    private InMemoryStorage storage;
+    private final InMemoryStorage storage;
 
     public TrainerDAO(InMemoryStorage storage) {
         this.storage = storage;
     }
     public void createTrainer(Trainer trainer) {
+        storage.addToStorage("users", trainer.getUser().getId(), trainer.getUser());
+        storage.addToStorage("trainingTypes", trainer.getTrainingType().getId(), trainer.getTrainingType());
         storage.addToStorage("trainers", trainer.getId(), trainer);
+
     }
 
     public void updateTrainer(Trainer trainer) {

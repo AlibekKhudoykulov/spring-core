@@ -11,12 +11,9 @@ public class UsernameGenerator {
     @Autowired
     private UserDAO userDAO;
 
-    public void setUserDAO(UserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
 
     public String generateUsername(User user) {
-        String baseUsername = user.getFirstName() + "." + user.getUsername();
+        String baseUsername = user.getFirstName() + "." + user.getLastName();
         String username = baseUsername;
         int count = 1;
 
