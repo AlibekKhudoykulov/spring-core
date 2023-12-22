@@ -83,9 +83,5 @@ public class SampleDataInitializer {
         return new TrainingDto(
                 id,traineeId,trainerId,trainingName,trainingTypeId,new Date(),trainingDuration);
     }
-
-    // Add methods for creating sample trainers, trainings, etc.
-
-    // Additional initialization methods as needed
 }
 
