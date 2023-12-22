@@ -8,6 +8,33 @@
     <artifactId>spring-core</artifactId>
     <version>1.0-SNAPSHOT</version>
     <dependencies>
+        <!-- JPA (Java Persistence API) -->
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>javax.persistence-api</artifactId>
+            <version>2.2</version>
+        </dependency>
+
+        <!-- Hibernate JPA implementation -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.6.5.Final</version> <!-- Use the latest version available -->
+        </dependency>
+
+        <!-- Hibernate EntityManager (JPA 2.1) -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>5.6.5.Final</version> <!-- Use the same version as hibernate-core -->
+        </dependency>
+
+        <!-- If you want to use Hibernate Validator for bean validation -->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>7.0.2.Final</version> <!-- Use the latest version available -->
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -58,7 +85,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.9</version> <!-- Use the latest version available -->
+            <version>1.4.12</version> <!-- Use the latest version available -->
         </dependency>
 
         <dependency>
