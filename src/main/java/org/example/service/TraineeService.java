@@ -12,11 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Service
-public class TraineeService {
+public class TraineeService implements BaseService<Trainee>{
 
     private static final Logger logger = LoggerFactory.getLogger(TraineeService.class);
 
-    @Autowired
     private TraineeDAO traineeDAO;
 
     @Autowired
@@ -25,29 +24,45 @@ public class TraineeService {
     @Autowired
     private PasswordGenerator passwordGenerator;
 
-    public void createTrainee(Trainee trainee) {
-        // Generate username
-        User user = trainee.getUser();
+    @Autowired
+    public void setTraineeDAO(TraineeDAO traineeDAO) {
+        this.traineeDAO = traineeDAO;
+    }
+
+    @Override
+    public void create(Trainee entity) {
+        User user = entity.getUser();
         String username = usernameGenerator.generateUsername(user);
         user.setUsername(username);
 
-        // Generate password
         String password = passwordGenerator.generateRandomPassword();
         user.setPassword(password);
 
-        trainee.setUser(user);
+        entity.setUser(user);
 
-        logger.debug("Creating Trainee: {} {}", trainee.getUser().getFirstName(), trainee.getUser().getLastName());
+        logger.debug("Creating Trainee: {} {}", entity.getUser().getFirstName(), entity.getUser().getLastName());
 
-        // Persist trainee
-        traineeDAO.createTrainee(trainee);
+        traineeDAO.create(entity);
 
-        logger.info("Trainee created: {}", trainee.getId());
+        logger.info("Trainee created: {}", entity.getId());
+    }
 
+    @Override
+    public Trainee get(int id) {
+        logger.debug("Getting Trainee: {}", id);
+
+        Trainee trainee =  traineeDAO.get(id);
+
+        if (trainee != null) {
+            logger.info("Retrieved Trainee details for ID {}: {} {}", id, trainee.getUser().getFirstName(), trainee.getUser().getLastName());
+        } else {
+            logger.error("Trainee with ID {} not found", id);
+        }
+        return trainee;
     }
 
     public void updateTrainee(Trainee trainee) {
-        Trainee existingTrainee = traineeDAO.getTrainee(trainee.getId());
+        Trainee existingTrainee = traineeDAO.get(trainee.getId());
         if(existingTrainee!=null) {
             User user = existingTrainee.getUser();
             user.setFirstName(trainee.getUser().getFirstName());
@@ -74,17 +89,4 @@ public class TraineeService {
 
         logger.info("Trainee deleted: {}", traineeId);
     }
-
-    public Trainee getTrainee(int traineeId) {
-        logger.debug("Getting Trainee: {}", traineeId);
-
-        Trainee trainee = (Trainee) traineeDAO.getTrainee(traineeId);
-
-        if (trainee != null) {
-            logger.info("Retrieved Trainee details for ID {}: {} {}", traineeId, trainee.getUser().getFirstName(), trainee.getUser().getLastName());
-        } else {
-            logger.error("Trainee with ID {} not found", traineeId);
-        }
-        return trainee;    }
-
 }

@@ -1,23 +1,26 @@
 package org.example.repository;
 
-import org.example.contant.EntityType;
+import org.example.constant.EntityType;
 import org.example.model.Training;
+import org.example.repository.template.BaseDAO;
 import org.example.storage.InMemoryStorage;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TrainingDAO {
+public class TrainingDAO implements BaseDAO<Training> {
     private InMemoryStorage storage;
 
     public TrainingDAO(InMemoryStorage storage) {
         this.storage = storage;
     }
 
-    public void createTraining(Training training) {
-        storage.addToStorage(EntityType.TRAINING, training.getId(), training);
+    @Override
+    public void create(Training entity) {
+        storage.addToStorage(EntityType.TRAINING, entity);
     }
 
-    public Training getTraining(int trainingId) {
-        return (Training) storage.getFromStorage(EntityType.TRAINING, trainingId);
+    @Override
+    public Training get(int id) {
+        return (Training) storage.getFromStorage(EntityType.TRAINING, id);
     }
 }

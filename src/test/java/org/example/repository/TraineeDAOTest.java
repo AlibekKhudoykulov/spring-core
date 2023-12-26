@@ -1,6 +1,6 @@
 package org.example.repository;
 
-import org.example.contant.EntityType;
+import org.example.constant.EntityType;
 import org.example.model.Trainee;
 import org.example.model.User;
 import org.example.storage.InMemoryStorage;
@@ -34,10 +34,10 @@ class TraineeDAOTest {
         user.setId(2);
         trainee.setUser(user);
 
-        traineeDAO.createTrainee(trainee);
+        traineeDAO.create(trainee);
 
-        verify(storage).addToStorage(EntityType.USER, user.getId(), user);
-        verify(storage).addToStorage(EntityType.TRAINEE, trainee.getId(), trainee);
+        verify(storage).addToStorage(EntityType.USER, user);
+        verify(storage).addToStorage(EntityType.TRAINEE, trainee);
     }
 
     @Test
@@ -47,7 +47,7 @@ class TraineeDAOTest {
 
         traineeDAO.updateTrainee(trainee);
 
-        verify(storage).updateStorage(EntityType.TRAINEE, trainee.getId(), trainee);
+        verify(storage).updateStorage(EntityType.TRAINEE, trainee);
     }
 
     @Test
@@ -64,7 +64,7 @@ class TraineeDAOTest {
 
         when(storage.getFromStorage(EntityType.TRAINEE, 1)).thenReturn(trainee);
 
-        Trainee result = traineeDAO.getTrainee(1);
+        Trainee result = traineeDAO.get(1);
 
         assertEquals(trainee, result);
     }

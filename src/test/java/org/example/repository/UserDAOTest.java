@@ -1,8 +1,9 @@
 package org.example.repository;
 
 
-import org.example.contant.EntityType;
+import org.example.constant.EntityType;
 import org.example.model.User;
+import org.example.model.template.BaseEntity;
 import org.example.storage.InMemoryStorage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,7 +36,7 @@ public class UserDAOTest {
         User user = new User();
         user.setUsername("testUsername");
 
-        Map<Integer, Object> users = new HashMap<>();
+        Map<Integer, BaseEntity> users = new HashMap<>();
         users.put(1, user);
 
         when(storage.getFromStorageAllData(EntityType.USER)).thenReturn(users);

@@ -1,7 +1,7 @@
 package org.example.model;
 
 import lombok.*;
-import org.example.model.template.AbsEntity;
+import org.example.model.template.BaseEntity;
 
 
 @AllArgsConstructor
@@ -9,7 +9,7 @@ import org.example.model.template.AbsEntity;
 @Getter
 @Setter
 @ToString
-public class User extends AbsEntity {
+public class User extends BaseEntity {
     private String firstName;
     private String lastName;
     private String username;

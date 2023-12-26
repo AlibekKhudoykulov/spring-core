@@ -15,26 +15,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TrainingService {
+public class TrainingService{
     private static final Logger logger = LoggerFactory.getLogger(TrainingService.class);
 
-    @Autowired
     private TrainingDAO trainingDAO;
-
-    @Autowired
     private TrainerDAO trainerDAO;
-
-    @Autowired
     private TraineeDAO traineeDAO;
-
-    @Autowired
     private TrainingTypeDAO trainingTypeDAO;
 
+    @Autowired
+    public void setTrainingDAO(TrainingDAO trainingDAO) {
+        this.trainingDAO = trainingDAO;
+    }
+
+    @Autowired
+    public void setTrainerDAO(TrainerDAO trainerDAO) {
+        this.trainerDAO = trainerDAO;
+    }
+
+    @Autowired
+    public void setTraineeDAO(TraineeDAO traineeDAO) {
+        this.traineeDAO = traineeDAO;
+    }
+
+    @Autowired
+    public void setTrainingTypeDAO(TrainingTypeDAO trainingTypeDAO) {
+        this.trainingTypeDAO = trainingTypeDAO;
+    }
 
     public void createTraining(TrainingDto trainingDto) {
         Training training = new Training();
-        Trainer trainer = trainerDAO.getTrainer(trainingDto.getTrainerId());
-        Trainee trainee = traineeDAO.getTrainee(trainingDto.getTraineeId());
+        Trainer trainer = trainerDAO.get(trainingDto.getTrainerId());
+        Trainee trainee = traineeDAO.get(trainingDto.getTraineeId());
         TrainingType trainingType = trainingTypeDAO.getTrainingType(trainingDto.getTrainingTypeId());
 
         training.setId(trainingDto.getId());
@@ -47,14 +59,14 @@ public class TrainingService {
 
         logger.debug("Creating Training: {} for Trainee {} by Trainer {}", training.getTrainingName(), trainee.getId(), trainer.getId());
 
-        trainingDAO.createTraining(training);
+        trainingDAO.create(training);
         logger.info("Training created: {}", training.getId());
     }
 
     public Training getTraining(int trainingId) {
         logger.debug("Getting Training: {}", trainingId);
 
-        Training training = trainingDAO.getTraining(trainingId);
+        Training training = trainingDAO.get(trainingId);
 
         if (training != null) {
             logger.info("Retrieved Training details for ID {}: {}", trainingId, training.getTrainingName());

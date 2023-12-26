@@ -1,7 +1,8 @@
 package org.example.repository;
 
-import org.example.contant.EntityType;
+import org.example.constant.EntityType;
 import org.example.model.User;
+import org.example.model.template.BaseEntity;
 import org.example.storage.InMemoryStorage;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +17,7 @@ public class UserDAO {
     }
 
     public boolean isUsernameExists(String username) {
-        Map<Integer, Object> usersNamespace = storage.getFromStorageAllData(EntityType.USER);
+        Map<Integer, BaseEntity> usersNamespace = storage.getFromStorageAllData(EntityType.USER);
 
         for (Object entity : usersNamespace.values()) {
             if (entity instanceof User user) {

@@ -1,30 +1,33 @@
 package org.example.repository;
 
 
-import org.example.contant.EntityType;
+import org.example.constant.EntityType;
 import org.example.model.Trainer;
+import org.example.repository.template.BaseDAO;
 import org.example.storage.InMemoryStorage;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TrainerDAO {
+public class TrainerDAO implements BaseDAO<Trainer> {
     private final InMemoryStorage storage;
 
     public TrainerDAO(InMemoryStorage storage) {
         this.storage = storage;
     }
-    public void createTrainer(Trainer trainer) {
-        storage.addToStorage(EntityType.USER, trainer.getUser().getId(), trainer.getUser());
-        storage.addToStorage(EntityType.TRAINING_TYPE, trainer.getTrainingType().getId(), trainer.getTrainingType());
-        storage.addToStorage(EntityType.TRAINER, trainer.getId(), trainer);
 
+    @Override
+    public void create(Trainer entity) {
+        storage.addToStorage(EntityType.USER, entity.getUser());
+        storage.addToStorage(EntityType.TRAINING_TYPE, entity.getTrainingType());
+        storage.addToStorage(EntityType.TRAINER, entity);
+    }
+
+    @Override
+    public Trainer get(int id) {
+        return (Trainer) storage.getFromStorage(EntityType.TRAINER, id);
     }
 
     public void updateTrainer(Trainer trainer) {
-        storage.updateStorage(EntityType.TRAINER, trainer.getId(), trainer);
-    }
-
-    public Trainer getTrainer(int trainerId) {
-        return (Trainer) storage.getFromStorage(EntityType.TRAINER, trainerId);
+        storage.updateStorage(EntityType.TRAINER, trainer);
     }
 }

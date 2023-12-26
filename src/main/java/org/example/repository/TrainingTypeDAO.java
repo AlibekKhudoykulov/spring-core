@@ -1,6 +1,6 @@
 package org.example.repository;
 
-import org.example.contant.EntityType;
+import org.example.constant.EntityType;
 import org.example.model.TrainingType;
 import org.example.storage.InMemoryStorage;
 import org.springframework.stereotype.Repository;

@@ -54,40 +54,31 @@ public class TrainerServiceTest {
 
     @Test
     public void createTrainerWhenTrainerPassedThenTrainerCreated() {
-        // Arrange
         when(usernameGenerator.generateUsername(user)).thenReturn("johndoe");
         when(passwordGenerator.generateRandomPassword()).thenReturn("password");
 
-        // Act
-        trainerService.createTrainer(trainer);
+        trainerService.create(trainer);
 
-        // Assert
         verify(usernameGenerator).generateUsername(user);
         verify(passwordGenerator).generateRandomPassword();
-        verify(trainerDAO).createTrainer(trainer);
+        verify(trainerDAO).create(trainer);
     }
 
     @Test
     public void updateTrainerWhenTrainerPassedThenTrainerUpdated() {
-        // Arrange
-        when(trainerDAO.getTrainer(trainer.getId())).thenReturn(trainer);
+        when(trainerDAO.get(trainer.getId())).thenReturn(trainer);
 
-        // Act
         trainerService.updateTrainer(trainer);
 
-        // Assert
         verify(trainerDAO).updateTrainer(trainer);
     }
 
     @Test
     public void getTrainerWhenTrainerIdPassedThenTrainerReturned() {
-        // Arrange
-        when(trainerDAO.getTrainer(1)).thenReturn(trainer);
+        when(trainerDAO.get(1)).thenReturn(trainer);
 
-        // Act
-        Trainer result = trainerService.getTrainer(1);
+        Trainer result = trainerService.get(1);
 
-        // Assert
-        verify(trainerDAO).getTrainer(1);
+        verify(trainerDAO).get(1);
     }
 }

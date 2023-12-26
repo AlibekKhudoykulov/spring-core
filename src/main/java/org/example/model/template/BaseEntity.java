@@ -3,6 +3,6 @@ package org.example.model.template;
 import lombok.Data;
 
 @Data
-public class AbsEntity {
+public class BaseEntity {
     private int id;
 }

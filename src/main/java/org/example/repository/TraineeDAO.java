@@ -1,13 +1,14 @@
 package org.example.repository;
 
-import org.example.contant.EntityType;
+import org.example.constant.EntityType;
 import org.example.model.Trainee;
+import org.example.repository.template.BaseDAO;
 import org.example.storage.InMemoryStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TraineeDAO {
+public class TraineeDAO implements BaseDAO<Trainee> {
 
     @Autowired
     private InMemoryStorage storage;
@@ -16,22 +17,23 @@ public class TraineeDAO {
         this.storage = storage;
     }
 
-    public void createTrainee(Trainee trainee) {
-        storage.addToStorage(EntityType.USER, trainee.getUser().getId(), trainee.getUser());
+    @Override
+    public void create(Trainee entity) {
+        storage.addToStorage(EntityType.USER, entity.getUser());
 
-        storage.addToStorage(EntityType.TRAINEE, trainee.getId(), trainee);
+        storage.addToStorage(EntityType.TRAINEE, entity);
+    }
+    @Override
+    public Trainee get(int id) {
+        return (Trainee) storage.getFromStorage(EntityType.TRAINEE, id);
     }
 
     public void updateTrainee(Trainee trainee) {
-        storage.updateStorage(EntityType.TRAINEE, trainee.getId(), trainee);
+        storage.updateStorage(EntityType.TRAINEE,trainee);
     }
 
     public void deleteTrainee(int traineeId) {
         storage.removeFromStorage(EntityType.TRAINEE, traineeId);
-    }
-
-    public Trainee getTrainee(int traineeId) {
-        return (Trainee) storage.getFromStorage(EntityType.TRAINEE, traineeId);
     }
 }
 

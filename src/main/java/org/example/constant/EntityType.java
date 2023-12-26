@@ -1,4 +1,4 @@
-package org.example.contant;
+package org.example.constant;
 
 public enum EntityType {
     USER,

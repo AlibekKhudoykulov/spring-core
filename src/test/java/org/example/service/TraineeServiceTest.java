@@ -49,21 +49,21 @@ public class TraineeServiceTest {
         when(usernameGenerator.generateUsername(any(User.class))).thenReturn("johndoe");
         when(passwordGenerator.generateRandomPassword()).thenReturn("password123");
 
-        traineeService.createTrainee(trainee);
+        traineeService.create(trainee);
 
         verify(usernameGenerator, times(1)).generateUsername(any(User.class));
         verify(passwordGenerator, times(1)).generateRandomPassword();
-        verify(traineeDAO, times(1)).createTrainee(trainee);
+        verify(traineeDAO, times(1)).create(trainee);
     }
 
     @Test
     @DisplayName("Test updateTrainee when Trainee then updateTrainee called")
     public void updateTraineeWhenTraineeThenUpdateTraineeCalled() {
-        when(traineeDAO.getTrainee(trainee.getId())).thenReturn(trainee);
+        when(traineeDAO.get(trainee.getId())).thenReturn(trainee);
 
         traineeService.updateTrainee(trainee);
 
-        verify(traineeDAO, times(1)).getTrainee(trainee.getId());
+        verify(traineeDAO, times(1)).get(trainee.getId());
         verify(traineeDAO, times(1)).updateTrainee(trainee);
     }
 
@@ -78,11 +78,11 @@ public class TraineeServiceTest {
     @Test
     @DisplayName("Test getTrainee when TraineeId then Trainee returned")
     public void getTraineeWhenTraineeIdThenTraineeReturned() {
-        when(traineeDAO.getTrainee(trainee.getId())).thenReturn(trainee);
+        when(traineeDAO.get(trainee.getId())).thenReturn(trainee);
 
-        Trainee returnedTrainee = traineeService.getTrainee(trainee.getId());
+        Trainee returnedTrainee = traineeService.get(trainee.getId());
 
         assertSame(trainee, returnedTrainee);
-        verify(traineeDAO, times(1)).getTrainee(trainee.getId());
+        verify(traineeDAO, times(1)).get(trainee.getId());
     }
 }

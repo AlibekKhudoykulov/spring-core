@@ -54,37 +54,30 @@ public class TrainingServiceTest {
         trainingDto.setTrainingDuration(2.5f);
 
         Trainer trainer = new Trainer();
-        when(trainerDAO.getTrainer(1)).thenReturn(trainer);
+        when(trainerDAO.get(1)).thenReturn(trainer);
 
         Trainee trainee = new Trainee();
-        when(traineeDAO.getTrainee(2)).thenReturn(trainee);
+        when(traineeDAO.get(2)).thenReturn(trainee);
 
         TrainingType trainingType = new TrainingType();
         when(trainingTypeDAO.getTrainingType(3)).thenReturn(trainingType);
 
-        // When
         trainingService.createTraining(trainingDto);
 
-        // Then
-        verify(trainingDAO, times(1)).createTraining(any(Training.class));
+        verify(trainingDAO, times(1)).create(any(Training.class));
     }
     @Test
     public void getTraining() {
-        // Given
         int trainingId = 1;
         Training expectedTraining = new Training();
         expectedTraining.setId(trainingId);
         expectedTraining.setTrainingName("Test Training");
 
-        when(trainingDAO.getTraining(trainingId)).thenReturn(expectedTraining);
+        when(trainingDAO.get(trainingId)).thenReturn(expectedTraining);
 
-        // When
         Training actualTraining = trainingService.getTraining(trainingId);
+        verify(trainingDAO, times(1)).get(trainingId);
 
-        // Then
-        verify(trainingDAO, times(1)).getTraining(trainingId);
-
-        // Additional assertions
         assertNotNull(actualTraining);
         assertEquals(expectedTraining.getId(), actualTraining.getId());
         assertEquals(expectedTraining.getTrainingName(), actualTraining.getTrainingName());
@@ -92,18 +85,14 @@ public class TrainingServiceTest {
 
     @Test
     public void getTrainingNotFound() {
-        // Given
         int trainingId = 1;
 
-        when(trainingDAO.getTraining(trainingId)).thenReturn(null);
+        when(trainingDAO.get(trainingId)).thenReturn(null);
 
-        // When
         Training actualTraining = trainingService.getTraining(trainingId);
 
-        // Then
-        verify(trainingDAO, times(1)).getTraining(trainingId);
+        verify(trainingDAO, times(1)).get(trainingId);
 
-        // Additional assertions
         assertNull(actualTraining);
     }
 }

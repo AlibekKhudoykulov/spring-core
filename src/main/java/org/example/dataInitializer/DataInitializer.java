@@ -1,5 +1,6 @@
 package org.example.dataInitializer;
 
+import org.example.constant.EntityType;
 import org.example.dto.TrainingDto;
 import org.example.model.Trainee;
 import org.example.model.Trainer;
@@ -44,20 +45,20 @@ public class DataInitializer {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] parts = line.split(",");
-                String type = parts[0];
+                EntityType type = EntityType.valueOf(parts[0].toUpperCase());
 
-                switch(type) {
-                    case "Trainee":
+                switch (type) {
+                    case TRAINEE:
                         Trainee trainee = createTrainee(Integer.parseInt(parts[1]), parts[2], parts[3], parts[4]);
-                        traineeService.createTrainee(trainee);
+                        traineeService.create(trainee);
                         break;
 
-                    case "Trainer":
+                    case TRAINER:
                         Trainer trainer = createTrainer(Integer.parseInt(parts[1]), parts[2], parts[3], parts[4]);
-                        trainerService.createTrainer(trainer);
+                        trainerService.create(trainer);
                         break;
 
-                    case "Training":
+                    case TRAINING:
                         TrainingDto training = createTraining(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]),
                                 Integer.parseInt(parts[3]), parts[4], Integer.parseInt(parts[5]), Float.parseFloat(parts[6]));
                         trainingService.createTraining(training);
@@ -100,9 +101,9 @@ public class DataInitializer {
     }
 
     private TrainingDto createTraining(int id, int traineeId, int trainerId, String trainingName,
-                                    int trainingTypeId, float trainingDuration){
+                                       int trainingTypeId, float trainingDuration) {
         return new TrainingDto(
-                id,traineeId,trainerId,trainingName,trainingTypeId,new Date(),trainingDuration);
+                id, traineeId, trainerId, trainingName, trainingTypeId, new Date(), trainingDuration);
     }
 }
 
