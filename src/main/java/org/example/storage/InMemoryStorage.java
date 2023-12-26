@@ -9,12 +9,16 @@ import java.util.Map;
 
 @Component
 public class InMemoryStorage {
-    private final Map<EntityType, Map<Integer, Object>> storage = new HashMap<>();
+    private static final Map<EntityType, Map<Integer, Object>> storage = new HashMap<>();
 
+    static{
+        storage.put(EntityType.USER, new HashMap<>());
+        storage.put(EntityType.TRAINEE, new HashMap<>());
+        storage.put(EntityType.TRAINING_TYPE, new HashMap<>());
+        storage.put(EntityType.TRAINER, new HashMap<>());
+        storage.put(EntityType.TRAINING, new HashMap<>());
+    }
     public void addToStorage(EntityType entityType, int entityId, Object entity) {
-        if (!storage.containsKey(entityType)) {
-            storage.put(entityType, new HashMap<>());
-        }
         storage.get(entityType).put(entityId, entity);
     }
 
