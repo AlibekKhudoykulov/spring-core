@@ -18,7 +18,7 @@ public class PasswordGeneratorTest {
     }
 
     @Test
-    public void generateRandomPasswordTest() {
+    public void generateRandomPassword() {
         String password = passwordGenerator.generateRandomPassword();
 
         assertNotNull(password, "The generated password cannot be null");

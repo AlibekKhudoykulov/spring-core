@@ -1,5 +1,6 @@
 package org.example.repository;
 
+import org.example.contant.EntityType;
 import org.example.model.Training;
 import org.example.storage.InMemoryStorage;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,18 +27,18 @@ public class TrainingDAOTest {
     }
 
     @Test
-    public void testCreateTraining() {
+    public void createTraining() {
         Training training = new Training();
         training.setId(1);
         trainingDAO.createTraining(training);
-        verify(storage).addToStorage("trainings", training.getId(), training);
+        verify(storage).addToStorage(EntityType.TRAINING, training.getId(), training);
     }
 
     @Test
-    public void testGetTraining() {
+    public void getTraining() {
         Training training = new Training();
         training.setId(1);
-        when(storage.getFromStorage("trainings", 1)).thenReturn(training);
+        when(storage.getFromStorage(EntityType.TRAINING, 1)).thenReturn(training);
         Training result = trainingDAO.getTraining(1);
         assertEquals(training, result);
     }

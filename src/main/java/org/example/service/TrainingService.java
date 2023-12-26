@@ -45,14 +45,14 @@ public class TrainingService {
         training.setTrainingName(trainingDto.getTrainingName());
         training.setTrainingDuration(trainingDto.getTrainingDuration());
 
-        logger.info("Creating Training: {} for Trainee {} by Trainer {}", training.getTrainingName(), trainee.getId(), trainer.getId());
+        logger.debug("Creating Training: {} for Trainee {} by Trainer {}", training.getTrainingName(), trainee.getId(), trainer.getId());
 
         trainingDAO.createTraining(training);
         logger.info("Training created: {}", training.getId());
     }
 
     public Training getTraining(int trainingId) {
-        logger.info("Getting Training: {}", trainingId);
+        logger.debug("Getting Training: {}", trainingId);
 
         Training training = trainingDAO.getTraining(trainingId);
 

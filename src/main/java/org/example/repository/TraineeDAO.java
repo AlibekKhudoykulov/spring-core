@@ -1,5 +1,6 @@
 package org.example.repository;
 
+import org.example.contant.EntityType;
 import org.example.model.Trainee;
 import org.example.storage.InMemoryStorage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,21 +17,21 @@ public class TraineeDAO {
     }
 
     public void createTrainee(Trainee trainee) {
-        storage.addToStorage("users", trainee.getUser().getId(), trainee.getUser());
+        storage.addToStorage(EntityType.USER, trainee.getUser().getId(), trainee.getUser());
 
-        storage.addToStorage("trainees", trainee.getId(), trainee);
+        storage.addToStorage(EntityType.TRAINEE, trainee.getId(), trainee);
     }
 
     public void updateTrainee(Trainee trainee) {
-        storage.updateStorage("trainees", trainee.getId(), trainee);
+        storage.updateStorage(EntityType.TRAINEE, trainee.getId(), trainee);
     }
 
     public void deleteTrainee(int traineeId) {
-        storage.removeFromStorage("trainees", traineeId);
+        storage.removeFromStorage(EntityType.TRAINEE, traineeId);
     }
 
     public Trainee getTrainee(int traineeId) {
-        return (Trainee) storage.getFromStorage("trainees", traineeId);
+        return (Trainee) storage.getFromStorage(EntityType.TRAINEE, traineeId);
     }
 }
 

@@ -1,6 +1,7 @@
 package org.example.repository;
 
 
+import org.example.contant.EntityType;
 import org.example.model.User;
 import org.example.storage.InMemoryStorage;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,22 +31,22 @@ public class UserDAOTest {
     }
 
     @Test
-    public void isUsernameExistsTest() {
+    public void isUsernameExists() {
         User user = new User();
         user.setUsername("testUsername");
 
         Map<Integer, Object> users = new HashMap<>();
         users.put(1, user);
 
-        when(storage.getFromStorageAllData("users")).thenReturn(users);
+        when(storage.getFromStorageAllData(EntityType.USER)).thenReturn(users);
 
         assertTrue(userDAO.isUsernameExists("testUsername"));
         assertFalse(userDAO.isUsernameExists("nonexistentUsername"));
     }
 
     @Test
-    public void isUsernameExistsWhenUsersNamespaceIsEmptyTest() {
-        when(storage.getFromStorageAllData("users")).thenReturn(Collections.emptyMap());
+    public void isUsernameExistsWhenUsersNamespaceIsEmpty() {
+        when(storage.getFromStorageAllData(EntityType.USER)).thenReturn(Collections.emptyMap());
 
         assertFalse(userDAO.isUsernameExists("testUsername"));
     }

@@ -1,6 +1,7 @@
 package org.example.model;
 
 import lombok.*;
+import org.example.model.template.AbsEntity;
 
 import java.util.Date;
 
@@ -9,8 +10,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class Training {
-    private int id;
+public class Training extends AbsEntity {
     private Trainee trainee;
     private Trainer trainer;
     private String trainingName;

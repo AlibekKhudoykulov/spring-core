@@ -45,7 +45,7 @@ public class TraineeServiceTest {
 
     @Test
     @DisplayName("Test createTrainee when Trainee then createTrainee called")
-    public void testCreateTraineeWhenTraineeThenCreateTraineeCalled() {
+    public void createTraineeWhenTraineeThenCreateTraineeCalled() {
         when(usernameGenerator.generateUsername(any(User.class))).thenReturn("johndoe");
         when(passwordGenerator.generateRandomPassword()).thenReturn("password123");
 
@@ -58,7 +58,7 @@ public class TraineeServiceTest {
 
     @Test
     @DisplayName("Test updateTrainee when Trainee then updateTrainee called")
-    public void testUpdateTraineeWhenTraineeThenUpdateTraineeCalled() {
+    public void updateTraineeWhenTraineeThenUpdateTraineeCalled() {
         when(traineeDAO.getTrainee(trainee.getId())).thenReturn(trainee);
 
         traineeService.updateTrainee(trainee);
@@ -69,7 +69,7 @@ public class TraineeServiceTest {
 
     @Test
     @DisplayName("Test deleteTrainee when TraineeId then deleteTrainee called")
-    public void testDeleteTraineeWhenTraineeIdThenDeleteTraineeCalled() {
+    public void deleteTraineeWhenTraineeIdThenDeleteTraineeCalled() {
         traineeService.deleteTrainee(trainee.getId());
 
         verify(traineeDAO, times(1)).deleteTrainee(trainee.getId());
@@ -77,7 +77,7 @@ public class TraineeServiceTest {
 
     @Test
     @DisplayName("Test getTrainee when TraineeId then Trainee returned")
-    public void testGetTraineeWhenTraineeIdThenTraineeReturned() {
+    public void getTraineeWhenTraineeIdThenTraineeReturned() {
         when(traineeDAO.getTrainee(trainee.getId())).thenReturn(trainee);
 
         Trainee returnedTrainee = traineeService.getTrainee(trainee.getId());

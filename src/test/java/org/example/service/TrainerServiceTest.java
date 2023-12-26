@@ -53,7 +53,7 @@ public class TrainerServiceTest {
     }
 
     @Test
-    public void testCreateTrainerWhenTrainerPassedThenTrainerCreated() {
+    public void createTrainerWhenTrainerPassedThenTrainerCreated() {
         // Arrange
         when(usernameGenerator.generateUsername(user)).thenReturn("johndoe");
         when(passwordGenerator.generateRandomPassword()).thenReturn("password");
@@ -68,7 +68,7 @@ public class TrainerServiceTest {
     }
 
     @Test
-    public void testUpdateTrainerWhenTrainerPassedThenTrainerUpdated() {
+    public void updateTrainerWhenTrainerPassedThenTrainerUpdated() {
         // Arrange
         when(trainerDAO.getTrainer(trainer.getId())).thenReturn(trainer);
 
@@ -80,7 +80,7 @@ public class TrainerServiceTest {
     }
 
     @Test
-    public void testGetTrainerWhenTrainerIdPassedThenTrainerReturned() {
+    public void getTrainerWhenTrainerIdPassedThenTrainerReturned() {
         // Arrange
         when(trainerDAO.getTrainer(1)).thenReturn(trainer);
 

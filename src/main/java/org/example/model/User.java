@@ -1,6 +1,7 @@
 package org.example.model;
 
 import lombok.*;
+import org.example.model.template.AbsEntity;
 
 
 @AllArgsConstructor
@@ -8,8 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class User {
-    private int id;
+public class User extends AbsEntity {
     private String firstName;
     private String lastName;
     private String username;

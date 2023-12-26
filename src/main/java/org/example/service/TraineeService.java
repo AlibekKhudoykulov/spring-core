@@ -37,7 +37,7 @@ public class TraineeService {
 
         trainee.setUser(user);
 
-        logger.info("Creating Trainee: {} {}", trainee.getUser().getFirstName(), trainee.getUser().getLastName());
+        logger.debug("Creating Trainee: {} {}", trainee.getUser().getFirstName(), trainee.getUser().getLastName());
 
         // Persist trainee
         traineeDAO.createTrainee(trainee);
@@ -57,7 +57,7 @@ public class TraineeService {
             existingTrainee.setDateOfBirth(trainee.getDateOfBirth());
             existingTrainee.setUser(user);
 
-            logger.info("Updating Trainee: {}", trainee.getId());
+            logger.debug("Updating Trainee: {}", trainee.getId());
 
             traineeDAO.updateTrainee(existingTrainee);
 
@@ -68,7 +68,7 @@ public class TraineeService {
     }
 
     public void deleteTrainee(int traineeId) {
-        logger.info("Deleting Trainee: {}", traineeId);
+        logger.debug("Deleting Trainee: {}", traineeId);
 
         traineeDAO.deleteTrainee(traineeId);
 
@@ -76,7 +76,7 @@ public class TraineeService {
     }
 
     public Trainee getTrainee(int traineeId) {
-        logger.info("Getting Trainee: {}", traineeId);
+        logger.debug("Getting Trainee: {}", traineeId);
 
         Trainee trainee = (Trainee) traineeDAO.getTrainee(traineeId);
 

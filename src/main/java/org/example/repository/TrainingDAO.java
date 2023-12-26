@@ -1,5 +1,6 @@
 package org.example.repository;
 
+import org.example.contant.EntityType;
 import org.example.model.Training;
 import org.example.storage.InMemoryStorage;
 import org.springframework.stereotype.Repository;
@@ -13,10 +14,10 @@ public class TrainingDAO {
     }
 
     public void createTraining(Training training) {
-        storage.addToStorage("trainings", training.getId(), training);
+        storage.addToStorage(EntityType.TRAINING, training.getId(), training);
     }
 
     public Training getTraining(int trainingId) {
-        return (Training) storage.getFromStorage("trainings", trainingId);
+        return (Training) storage.getFromStorage(EntityType.TRAINING, trainingId);
     }
 }

@@ -43,7 +43,7 @@ public class TrainingServiceTest {
     }
 
     @Test
-    public void testCreateTraining() {
+    public void createTraining() {
         // Given
         TrainingDto trainingDto = new TrainingDto();
         trainingDto.setTrainerId(1);
@@ -69,7 +69,7 @@ public class TrainingServiceTest {
         verify(trainingDAO, times(1)).createTraining(any(Training.class));
     }
     @Test
-    public void testGetTraining() {
+    public void getTraining() {
         // Given
         int trainingId = 1;
         Training expectedTraining = new Training();
@@ -91,7 +91,7 @@ public class TrainingServiceTest {
     }
 
     @Test
-    public void testGetTrainingNotFound() {
+    public void getTrainingNotFound() {
         // Given
         int trainingId = 1;
 

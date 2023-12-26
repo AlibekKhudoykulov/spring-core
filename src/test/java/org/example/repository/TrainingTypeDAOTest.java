@@ -1,5 +1,6 @@
 package org.example.repository;
 
+import org.example.contant.EntityType;
 import org.example.model.TrainingType;
 import org.example.storage.InMemoryStorage;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,24 +27,24 @@ class TrainingTypeDAOTest {
     }
 
     @Test
-    public void testGetTrainingType() {
+    public void getTrainingType() {
         TrainingType mockTrainingType= new TrainingType();
-        when(storage.getFromStorage("trainingTypes", 1)).thenReturn(mockTrainingType);
+        when(storage.getFromStorage(EntityType.TRAINING_TYPE, 1)).thenReturn(mockTrainingType);
 
         TrainingType result=trainingTypeDAO.getTrainingType(1);
 
         assertEquals(mockTrainingType, result);
-        verify(storage).getFromStorage("trainingTypes", 1);
+        verify(storage).getFromStorage(EntityType.TRAINING_TYPE, 1);
     }
 
     @Test
-    public void testGetTrainingTypeWhenIdIsNotPresentInStorage() {
-        when(storage.getFromStorage("trainingTypes", 1)).thenReturn(null);
+    public void getTrainingTypeWhenIdIsNotPresentInStorage() {
+        when(storage.getFromStorage(EntityType.TRAINING_TYPE, 1)).thenReturn(null);
 
         TrainingType result = trainingTypeDAO.getTrainingType(1);
 
         assertNull(result);
-        verify(storage).getFromStorage("trainingTypes", 1);
+        verify(storage).getFromStorage(EntityType.TRAINING_TYPE, 1);
     }
 }
 

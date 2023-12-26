@@ -36,7 +36,7 @@ public class TrainerService {
 
         trainer.setUser(user);
 
-        logger.info("Creating Trainer: {} {}", trainer.getUser().getFirstName(), trainer.getUser().getLastName());
+        logger.debug("Creating Trainer: {} {}", trainer.getUser().getFirstName(), trainer.getUser().getLastName());
 
         trainerDAO.createTrainer(trainer);
 
@@ -57,7 +57,7 @@ public class TrainerService {
             existingTrainer.setTrainingType(trainingType);
             existingTrainer.setUser(user);
 
-            logger.info("Updating Trainer: {}", trainer.getId());
+            logger.debug("Updating Trainer: {}", trainer.getId());
 
             trainerDAO.updateTrainer(existingTrainer);
 
@@ -69,7 +69,7 @@ public class TrainerService {
     }
 
     public Trainer getTrainer(int trainerId) {
-        logger.info("Getting Trainer: {}", trainerId);
+        logger.debug("Getting Trainer: {}", trainerId);
 
         Trainer trainer = (Trainer) trainerDAO.getTrainer(trainerId);
         if (trainer != null) {

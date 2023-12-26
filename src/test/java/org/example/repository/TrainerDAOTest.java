@@ -1,5 +1,6 @@
 package org.example.repository;
 
+import org.example.contant.EntityType;
 import org.example.model.Trainer;
 import org.example.model.User;
 import org.example.model.TrainingType;
@@ -28,7 +29,7 @@ class TrainerDAOTest {
     }
 
     @Test
-    public void testCreateTrainer() {
+    public void createTrainer() {
         Trainer trainer = new Trainer();
         trainer.setId(1);
 
@@ -43,25 +44,25 @@ class TrainerDAOTest {
         trainerDAO.createTrainer(trainer);
 
         // Verifying the storage interactions
-        verify(storage).addToStorage("users", user.getId(), user);
-        verify(storage).addToStorage("trainingTypes", trainingType.getId(), trainingType);
-        verify(storage).addToStorage("trainers", trainer.getId(), trainer);
+        verify(storage).addToStorage(EntityType.USER, user.getId(), user);
+        verify(storage).addToStorage(EntityType.TRAINING_TYPE, trainingType.getId(), trainingType);
+        verify(storage).addToStorage(EntityType.TRAINER, trainer.getId(), trainer);
     }
 
     @Test
-    public void testUpdateTrainer() {
+    public void updateTrainer() {
         Trainer trainer = new Trainer();
         trainer.setId(1);
         trainerDAO.updateTrainer(trainer);
-        verify(storage).updateStorage("trainers", trainer.getId(), trainer);
+        verify(storage).updateStorage(EntityType.TRAINER, trainer.getId(), trainer);
     }
 
     @Test
-    public void testGetTrainer() {
+    public void getTrainer() {
         Trainer trainer = new Trainer();
         trainer.setId(1);
 
-        when(storage.getFromStorage("trainers", 1)).thenReturn(trainer);
+        when(storage.getFromStorage(EntityType.TRAINER, 1)).thenReturn(trainer);
 
         Trainer result = trainerDAO.getTrainer(1);
 

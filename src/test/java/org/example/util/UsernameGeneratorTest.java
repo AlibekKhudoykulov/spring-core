@@ -25,7 +25,7 @@ public class UsernameGeneratorTest {
     }
 
     @Test
-    public void generateUsernameTest() {
+    public void generateUsername() {
         User user = new User();
         user.setFirstName("John");
         user.setLastName("Doe");
@@ -38,7 +38,7 @@ public class UsernameGeneratorTest {
     }
 
     @Test
-    public void generateWhenUsernameExistsTest() {
+    public void generateWhenUsernameExists() {
         User user = new User();
         user.setFirstName("John");
         user.setLastName("Doe");
@@ -52,12 +52,12 @@ public class UsernameGeneratorTest {
     }
 
     @Test
-    public void generateUsernameForNullUserTest() {
+    public void generateUsernameForNullUser() {
         assertThrows(NullPointerException.class, () -> usernameGenerator.generateUsername(null));
     }
 
     @Test
-    public void generateUsernameForEmptyNameTest() {
+    public void generateUsernameForEmptyName() {
         User user = new User();
         user.setFirstName("");
         user.setLastName("");

@@ -1,5 +1,6 @@
 package org.example.repository;
 
+import org.example.contant.EntityType;
 import org.example.model.Trainee;
 import org.example.model.User;
 import org.example.storage.InMemoryStorage;
@@ -26,7 +27,7 @@ class TraineeDAOTest {
     }
 
     @Test
-    void testCreateTrainee() {
+    void createTrainee() {
         Trainee trainee = new Trainee();
         trainee.setId(1);
         User user = new User();
@@ -35,33 +36,33 @@ class TraineeDAOTest {
 
         traineeDAO.createTrainee(trainee);
 
-        verify(storage).addToStorage("users", user.getId(), user);
-        verify(storage).addToStorage("trainees", trainee.getId(), trainee);
+        verify(storage).addToStorage(EntityType.USER, user.getId(), user);
+        verify(storage).addToStorage(EntityType.TRAINEE, trainee.getId(), trainee);
     }
 
     @Test
-    void testUpdateTrainee() {
+    void updateTrainee() {
         Trainee trainee = new Trainee();
         trainee.setId(1);
 
         traineeDAO.updateTrainee(trainee);
 
-        verify(storage).updateStorage("trainees", trainee.getId(), trainee);
+        verify(storage).updateStorage(EntityType.TRAINEE, trainee.getId(), trainee);
     }
 
     @Test
-    void testDeleteTrainee() {
+    void deleteTrainee() {
         traineeDAO.deleteTrainee(1);
 
-        verify(storage).removeFromStorage("trainees", 1);
+        verify(storage).removeFromStorage(EntityType.TRAINEE, 1);
     }
 
     @Test
-    void testGetTrainee() {
+    void getTrainee() {
         Trainee trainee = new Trainee();
         trainee.setId(1);
 
-        when(storage.getFromStorage("trainees", 1)).thenReturn(trainee);
+        when(storage.getFromStorage(EntityType.TRAINEE, 1)).thenReturn(trainee);
 
         Trainee result = traineeDAO.getTrainee(1);
 
