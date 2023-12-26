@@ -9,6 +9,8 @@ import org.example.model.User;
 import org.example.service.TraineeService;
 import org.example.service.TrainerService;
 import org.example.service.TrainingService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -19,17 +21,12 @@ import java.util.Scanner;
 
 @Component
 public class DataInitializer {
+    private static final Logger logger = LoggerFactory.getLogger(DataInitializer.class);
 
-    private final TraineeService traineeService;
-    private final TrainerService trainerService;
-    private final TrainingService trainingService;
+    private final ServiceFacade serviceFacade;
 
-    public DataInitializer(TraineeService traineeService,
-                           TrainerService trainerService,
-                           TrainingService trainingService) {
-        this.traineeService = traineeService;
-        this.trainerService = trainerService;
-        this.trainingService = trainingService;
+    public DataInitializer(ServiceFacade serviceFacade) {
+        this.serviceFacade = serviceFacade;
     }
 
     @PostConstruct
@@ -50,24 +47,24 @@ public class DataInitializer {
                 switch (type) {
                     case TRAINEE:
                         Trainee trainee = createTrainee(Integer.parseInt(parts[1]), parts[2], parts[3], parts[4]);
-                        traineeService.create(trainee);
+                        serviceFacade.createTrainee(trainee);
                         break;
 
                     case TRAINER:
                         Trainer trainer = createTrainer(Integer.parseInt(parts[1]), parts[2], parts[3], parts[4]);
-                        trainerService.create(trainer);
+                        serviceFacade.createTrainer(trainer);
                         break;
 
                     case TRAINING:
                         TrainingDto training = createTraining(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]),
                                 Integer.parseInt(parts[3]), parts[4], Integer.parseInt(parts[5]), Float.parseFloat(parts[6]));
-                        trainingService.createTraining(training);
+                        serviceFacade.createTraining(training);
                         break;
                 }
             }
             scanner.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error("Failed to create sample trainees. File not found: {}", e.getMessage(), e);
         }
     }
 

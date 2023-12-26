@@ -7,6 +7,7 @@ import org.example.model.template.BaseEntity;
 import org.example.storage.InMemoryStorage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -20,6 +21,7 @@ import static org.mockito.Mockito.when;
 
 public class UserDAOTest {
 
+    @InjectMocks
     private UserDAO userDAO;
 
     @Mock
@@ -28,7 +30,6 @@ public class UserDAOTest {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        userDAO = new UserDAO(storage);
     }
 
     @Test

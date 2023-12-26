@@ -75,7 +75,7 @@ public class TrainingServiceTest {
 
         when(trainingDAO.get(trainingId)).thenReturn(expectedTraining);
 
-        Training actualTraining = trainingService.getTraining(trainingId);
+        Training actualTraining = trainingService.get(trainingId);
         verify(trainingDAO, times(1)).get(trainingId);
 
         assertNotNull(actualTraining);
@@ -89,7 +89,7 @@ public class TrainingServiceTest {
 
         when(trainingDAO.get(trainingId)).thenReturn(null);
 
-        Training actualTraining = trainingService.getTraining(trainingId);
+        Training actualTraining = trainingService.get(trainingId);
 
         verify(trainingDAO, times(1)).get(trainingId);
 

@@ -10,10 +10,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class TraineeDAO implements BaseDAO<Trainee> {
 
-    @Autowired
     private InMemoryStorage storage;
 
-    public TraineeDAO(InMemoryStorage storage) {
+    @Autowired
+    public void setStorage(InMemoryStorage storage) {
         this.storage = storage;
     }
 

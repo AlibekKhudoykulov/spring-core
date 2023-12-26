@@ -4,15 +4,17 @@ import org.example.constant.EntityType;
 import org.example.model.User;
 import org.example.model.template.BaseEntity;
 import org.example.storage.InMemoryStorage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;
 
 @Repository
 public class UserDAO {
-    private final InMemoryStorage storage;
+    private InMemoryStorage storage;
 
-    public UserDAO(InMemoryStorage storage) {
+    @Autowired
+    public void setStorage(InMemoryStorage storage) {
         this.storage = storage;
     }
 

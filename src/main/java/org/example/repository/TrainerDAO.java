@@ -5,13 +5,15 @@ import org.example.constant.EntityType;
 import org.example.model.Trainer;
 import org.example.repository.template.BaseDAO;
 import org.example.storage.InMemoryStorage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class TrainerDAO implements BaseDAO<Trainer> {
-    private final InMemoryStorage storage;
+    private InMemoryStorage storage;
 
-    public TrainerDAO(InMemoryStorage storage) {
+    @Autowired
+    public void setStorage(InMemoryStorage storage) {
         this.storage = storage;
     }
 

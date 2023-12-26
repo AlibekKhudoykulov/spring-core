@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class TrainerService implements BaseService<Trainer> {
     private static final Logger logger = LoggerFactory.getLogger(TraineeService.class);
+
+    @Autowired
     private TrainerDAO trainerDAO;
 
     @Autowired
@@ -21,12 +23,6 @@ public class TrainerService implements BaseService<Trainer> {
 
     @Autowired
     private PasswordGenerator passwordGenerator;
-
-    @Autowired
-    public void setTrainerDAO(TrainerDAO trainerDAO) {
-        this.trainerDAO = trainerDAO;
-    }
-
 
     @Override
     public void create(Trainer entity) {

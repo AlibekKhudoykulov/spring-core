@@ -15,34 +15,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TrainingService{
+public class TrainingService implements BaseService<Training>{
     private static final Logger logger = LoggerFactory.getLogger(TrainingService.class);
 
+    @Autowired
     private TrainingDAO trainingDAO;
+
+    @Autowired
     private TrainerDAO trainerDAO;
+
+    @Autowired
     private TraineeDAO traineeDAO;
+
+    @Autowired
     private TrainingTypeDAO trainingTypeDAO;
 
-    @Autowired
-    public void setTrainingDAO(TrainingDAO trainingDAO) {
-        this.trainingDAO = trainingDAO;
+    @Override
+    public void create(Training entity) {
+        trainingDAO.create(entity);
+        logger.info("Training created: {}", entity.getId());
     }
 
-    @Autowired
-    public void setTrainerDAO(TrainerDAO trainerDAO) {
-        this.trainerDAO = trainerDAO;
-    }
+    @Override
+    public Training get(int id) {
+        logger.debug("Getting Training: {}", id);
 
-    @Autowired
-    public void setTraineeDAO(TraineeDAO traineeDAO) {
-        this.traineeDAO = traineeDAO;
-    }
+        Training training = trainingDAO.get(id);
 
-    @Autowired
-    public void setTrainingTypeDAO(TrainingTypeDAO trainingTypeDAO) {
-        this.trainingTypeDAO = trainingTypeDAO;
+        if (training != null) {
+            logger.info("Retrieved Training details for ID {}: {}", id, training.getTrainingName());
+        } else {
+            logger.error("Training with ID {} not found", id);
+        }
+        return training;
     }
-
     public void createTraining(TrainingDto trainingDto) {
         Training training = new Training();
         Trainer trainer = trainerDAO.get(trainingDto.getTrainerId());
@@ -58,22 +64,7 @@ public class TrainingService{
         training.setTrainingDuration(trainingDto.getTrainingDuration());
 
         logger.debug("Creating Training: {} for Trainee {} by Trainer {}", training.getTrainingName(), trainee.getId(), trainer.getId());
-
-        trainingDAO.create(training);
-        logger.info("Training created: {}", training.getId());
-    }
-
-    public Training getTraining(int trainingId) {
-        logger.debug("Getting Training: {}", trainingId);
-
-        Training training = trainingDAO.get(trainingId);
-
-        if (training != null) {
-            logger.info("Retrieved Training details for ID {}: {}", trainingId, training.getTrainingName());
-        } else {
-            logger.error("Training with ID {} not found", trainingId);
-        }
-        return training;
+        create(training);
     }
 
 }

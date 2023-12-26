@@ -16,6 +16,7 @@ public class TraineeService implements BaseService<Trainee>{
 
     private static final Logger logger = LoggerFactory.getLogger(TraineeService.class);
 
+    @Autowired
     private TraineeDAO traineeDAO;
 
     @Autowired
@@ -23,11 +24,6 @@ public class TraineeService implements BaseService<Trainee>{
 
     @Autowired
     private PasswordGenerator passwordGenerator;
-
-    @Autowired
-    public void setTraineeDAO(TraineeDAO traineeDAO) {
-        this.traineeDAO = traineeDAO;
-    }
 
     @Override
     public void create(Trainee entity) {
